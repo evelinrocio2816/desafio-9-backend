@@ -8,18 +8,19 @@
             <img src={{this.product.image}}>
             <p class="card-text">Cantidad: {{this.quantity}}</p>
             <p class="card-text">Precio: ${{this.product.totalPrice}}</p>
-            <button onclick="deleteProduct('{{this.cartId}}', '{{this.product._id}}')">Eliminar</button>
+            <button class="btnCart" onclick="deleteProduct('{{this.cartId}}', '{{this.product._id}}')">Eliminar</button>
         </div>
     </div>
     {{/each}}
+    
 </div>
-
-<button onclick="emptyCart('{{this.cartId}}')">Vaciar Carrito</button>
+<div class="containerCompras">
+<button class="btnCart" onclick="emptyCart('{{this.cartId}}')">Vaciar Carrito</button>
 <h3 >Total de la compra: ${{totalPurchase}}</h3>
 
 <div>
     <h3>CheckO Out</h3>
-    <button onclick="finalizePurchase('{{this.cartId}}')">Finalizar compra</button>
+    <button class="btnCart" onclick="finalizePurchase('{{this.cartId}}')">Finalizar compra</button>
 </div>
-
+</div>
  <script src="/js/cart.js"></script>

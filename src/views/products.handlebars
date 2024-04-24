@@ -1,0 +1,31 @@
+<h1> Productos </h1>
+<ul>
+<div class="Products-Container">
+
+{{#each products}}
+<div class="containerCard">
+    <img src={{image}}>
+    <h2>{{title}}</h2>
+    <p>{{description}}</p>
+    <p>Price: ${{price}}</p>
+    <p>Category: {{category}} </p>
+    <form class="formBtnProducts" action="/api/carts/{{../cartId}}/product/{{id}}" method="POST">
+        <button type="submit">Agregar al Carrito</button>
+    </form>
+    </div>
+{{/each}}
+
+</div>
+</ul>
+<div class="divContainerPage">
+{{#if hasPrevPage}}
+<a href="/products?page={{prevPage}}"> Anterior </a>
+{{/if}}
+<p>Pagina {{currentPage}} de {{totalPages}} </p>
+{{#if hasNextPage}}
+<a href="/products?page={{nextPage}}"> Siguiente </a>
+{{/if}}
+
+
+</div>
+</div>

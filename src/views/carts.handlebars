@@ -1,0 +1,25 @@
+<h1>Carrito de Compras</h1>
+
+<div class="container">
+    {{#each products}}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Producto: {{this.product.title}}</h5>
+            <img src={{this.product.image}}>
+            <p class="card-text">Cantidad: {{this.quantity}}</p>
+            <p class="card-text">Precio: ${{this.product.totalPrice}}</p>
+            <button onclick="deleteProduct('{{this.cartId}}', '{{this.product._id}}')">Eliminar</button>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<button onclick="emptyCart('{{this.cartId}}')">Vaciar Carrito</button>
+<h3 >Total de la compra: ${{totalPurchase}}</h3>
+
+<div>
+    <h3>CheckO Out</h3>
+    <button onclick="finalizePurchase('{{this.cartId}}')">Finalizar compra</button>
+</div>
+
+ <script src="/js/cart.js"></script>

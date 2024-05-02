@@ -6,6 +6,7 @@ const UserDTO = require("../dto/user.dto.js");
 const CustomErrors = require("../services/errors/custom-error.js");
 const { EErrors } = require("../services/errors/enums.js");
 const { generateInfoError } = require("../services/errors/info.js");
+const logger =require("../utils/loggers.js") 
 
 class UserController {
   async register(req, res) {
@@ -25,14 +26,14 @@ class UserController {
         apellido,
         email,
       };
-      console.log("Usuario a registrar:", user);
+      logger.info("Usuario a registrar:", user);
       user.push(user);
-      console.log("Usuario después de la inserción:", user);
+      logger.info("Usuario después de la inserción:", user);
       res.send({ status: "success", payload: user });
 
       //Creo un nuevo carrito:
       const newCart = new CartModel();
-      console.log("Nuevo carrito creado:", newCart);
+      logger.info("Nuevo carrito creado:", newCart);
       await newCart.save();
 
       const newUser = new UserModel({
@@ -44,14 +45,14 @@ class UserController {
         age,
       });
 
-      console.log("Nuevo usuario creado:", newUser);
+      logger.info("Nuevo usuario creado:", newUser);
       await newUser.save();
 
       const token = jwt.sign({ user: newUser }, "coderhouse", {
         expiresIn: "1h",
       });
 
-      console.log("Token generado:", token);
+      logger.info("Token generado:", token);
       res.cookie("CookieToken", token, {
         maxAge: 3600000,
         httpOnly: true,
@@ -59,7 +60,7 @@ class UserController {
 
       res.redirect("/api/user/profile");
     } catch (error) {
-      console.error("Error en el registro de usuario:", error);
+      logger.error("Error en el registro de usuario:", error);
       res.status(500).send("Error interno del servidor");
     }
   }
@@ -69,14 +70,14 @@ class UserController {
     try {
       const userFound = await UserModel.findOne({ email });
 
-      console.log("Usuario encontrado en el inicio de sesión:", userFound);
+      logger.info("Usuario encontrado en el inicio de sesión:", userFound);
 
       if (!userFound) {
         return res.status(401).send("Usuario no válido");
       }
 
       const isValid = isValidPassword(password, userFound);
-      console.log("La contraseña es válida:", isValid);
+      logger.info("La contraseña es válida:", isValid);
 
       if (!isValid) {
         return res.status(401).send("Contraseña incorrecta");
@@ -86,7 +87,7 @@ class UserController {
         expiresIn: "1h",
       });
 
-      console.log("Token generado:", token);
+      logger.info("Token generado:", token);
       res.cookie("CookieToken", token, {
         maxAge: 3600000,
         httpOnly: true,
@@ -94,7 +95,7 @@ class UserController {
 
       res.redirect("/api/user/profile");
     } catch (error) {
-      console.error("Error en el inicio de sesión:", error);
+      logger.error("Error en el inicio de sesión:", error);
       res.status(500).send("Error interno del servidor");
     }
   }
@@ -106,7 +107,7 @@ class UserController {
       req.user.last_name,
       req.user.role
     );
-    console.log("Usuario obtenido en el perfil:", userDto);
+    logger.info("Usuario obtenido en el perfil:", userDto);
     const isAdmin = req.user.role === "admin";
     const cartId = req.user.cart.toString();
     res.render("profile", { user: userDto, isAdmin, cartId });
@@ -114,7 +115,7 @@ class UserController {
 
   async logout(req, res) {
     res.clearCookie("CookieToken");
-    console.log("Usuario desconectado.");
+    logger.info("Usuario desconectado.");
     res.redirect("/login");
   }
 
@@ -122,7 +123,7 @@ class UserController {
     if (req.user.user.role !== "admin") {
       return res.status(403).send("Acceso denegado");
     }
-    console.log("Acceso de administrador.");
+    logger.info("Acceso de administrador.");
     res.render("admin");
   }
 }

@@ -16,9 +16,11 @@ const userRouter = require("./routes/user.router.js");
 const mockingRouter = require("./routes/mocking.router.js")
 const handleErrors= require("./middleware/error.js")
 
-const addLogger= require("./utils/loggers.js")
+const addLogger= require("./middleware/logger.js")
 
 const TestRouter = require("./routes/Test.router.js")
+
+const logger= require("./utils/loggers.js")
 //Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -58,7 +60,7 @@ app.use("/", TestRouter)
 
 
 const httpServer = app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el Puerto: https://localhost:${PORT}`);
+    logger.info(`Servidor escuchando en el Puerto: https://localhost:${PORT}`);
 });
 
 //Websockets: 

@@ -4,8 +4,8 @@
     {{#each products}}
     <div class="card mb-3">
         <div class="card-body">
-            <h5 class="card-title">Producto: {{this.product.title}}</h5>
-            <img src={{this.product.image}}>
+            <h5 class="card-title"> {{this.product.title}}</h5>
+            <img src={{this.product.img}}>
             <p class="card-text">Cantidad: {{this.quantity}}</p>
             <p class="card-text">Precio: ${{this.product.totalPrice}}</p>
             <button class="btnCart" onclick="deleteProduct('{{this.cartId}}', '{{this.product._id}}')">Eliminar</button>
@@ -19,7 +19,7 @@
 <h3 >Total de la compra: ${{totalPurchase}}</h3>
 
 <div>
-    <h3>CheckO Out</h3>
+    <h3>Check Out</h3>
     <button class="btnCart" onclick="finalizePurchase('{{this.cartId}}')">Finalizar compra</button>
 </div>
 </div>

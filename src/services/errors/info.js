@@ -1,10 +1,5 @@
-const generateInfoError = (user) => {
-    return ` Los datos estan incompletos o no son válidos. 
-    Necesitamos recibir los siguientes datos: 
-    - Nombre: String, pero recibimos ${user.nombre}
-    - Apellido: String, pero recibimos ${user.apellido}
-    - Email: String, recibimos ${user.email}
-    `
+const generateInfoError = (email) => {
+    return ` Ya existe un usuario con el email ${email}, por favor ingrese otro correo electrónico`
 }
 
 module.exports = {

@@ -15,20 +15,21 @@ class UserController {
       const existUser = await UserModel.findOne({ email });
       if (existUser) {
         throw CustomErrors.createError({
-          nombre: "Usuario nuevo",
-          causa: generateInfoError({ nombre, apellido, email }),
+          email: "Usuario nuevo",
+          causa: generateInfoError(existUser.email),
           mensaje: "Error al intentar crear un usuario",
           codigo: EErrors.TIPO_INVALID,
         });
       }
       const user = {
-        nombre,
-        apellido,
+        first_name,
+        last_name,
         email,
-      };
-      logger.info("Usuario a registrar:", user);
+        password,
+        age
+    }
       user.push(user);
-      logger.info("Usuario después de la inserción:", user);
+      logger.info(user);
       res.send({ status: "success", payload: user });
 
       //Creo un nuevo carrito:

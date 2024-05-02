@@ -1,9 +1,9 @@
 
 const mongoose = require("mongoose");
-const { node_env } = require("../config/config");
+const { mongo_url } = require("../config/config");
 
 
 
- mongoose.connect(node_env)
+ mongoose.connect(mongo_url)
 .then(()=> console.log("Conexion Exitosa"))
 .catch((error)=>console.log("Error de conexion", error))

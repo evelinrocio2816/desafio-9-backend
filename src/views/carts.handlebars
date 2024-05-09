@@ -5,7 +5,7 @@
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title"> {{this.product.title}}</h5>
-            <img src={{this.product.img}}>
+            <img src={{this.product.image}}>
             <p class="card-text">Cantidad: {{this.quantity}}</p>
             <p class="card-text">Precio: ${{this.product.totalPrice}}</p>
             <button class="btnCart" onclick="deleteProduct('{{this.cartId}}', '{{this.product._id}}')">Eliminar</button>

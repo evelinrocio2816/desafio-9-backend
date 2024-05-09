@@ -24,11 +24,6 @@ const initializePassport = () => {
         }
     }));
 
-
-
-    
-  
-
 }
 
 const cookieExtractor = (req) => {

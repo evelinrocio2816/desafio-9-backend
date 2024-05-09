@@ -142,6 +142,7 @@ class CartController {
 
             const userWithCart = await UserModel.findOne({ cart: cartId });
 
+
             const ticket = new TicketModel({
                 code: generateUniqueCode(),
                 purchase_datetime: new Date(),
@@ -149,19 +150,27 @@ class CartController {
                 purchaser: userWithCart._id
             });
             await ticket.save();
-           logger.info('Ticket creado:', ticket);
+            logger.info('Ticket creado:', ticket);
           
             cart.products = cart.products.filter(item => productsNotAvailable.some(productId => productId.equals(item.product)));
-
-           
             await cart.save();
-            res.status(201).json({ productsNotAvailable, message: "Compra procesada exitosamente", ticketId: ticket._id });
+
+
+           await purchaseEmail(userWithCart.email , userWithCart.first_name ,ticket._id )
+         res.render("checkout", {
+            client: userWithCart.first_name,
+            email: userWithCart.email,
+            numTicket: ticket._id
+
+         })
+           
         } catch (error) {
-           logger.error('Error al procesar la compra:', error);
+            logger.error('Error al procesar la compra:', error);
             res.status(500).json({ error: 'Error interno del servidor' });
         }
     }
 }
+           
 
 module.exports = CartController;
 
